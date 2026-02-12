@@ -1,0 +1,112 @@
+# Roadmap Estratégico: Addon Blender AR Exporter
+
+Este documento apresenta um roadmap estratégico para o desenvolvimento e evolução do addon "AR USDZ Exporter" para Blender, com o objetivo de transformá-lo em uma ferramenta profissional e escalável para a criação de experiências de Realidade Aumentada.
+
+## 1. Visão Geral do Projeto
+
+O addon atual já estabeleceu um **MVP (Produto Mínimo Viável)** robusto, permitindo a exportação de modelos 3D do Blender para o formato USDZ, upload automático para o GitHub Pages e geração instantânea de QR Codes para visualização em AR. Este roadmap visa expandir essa funcionalidade, aprimorar a experiência do usuário e explorar oportunidades de mercado.
+
+## 2. Fases do Roadmap
+
+O desenvolvimento será dividido em fases estratégicas, cada uma com objetivos claros e entregáveis específicos:
+
+### 2.1. Fase 0: MVP (Produto Mínimo Viável) - Status Atual
+
+**Objetivo:** Validar a funcionalidade central de exportação, upload e visualização AR via QR Code.
+
+**Entregáveis Atuais:**
+*   Addon Blender para exportação de USDZ.
+*   Upload automático para repositório GitHub Pages (`geancg/blender-ar`).
+*   Geração e exibição de QR Code no painel do Blender.
+*   Instalação automática de dependências (`qrcode`, `requests`).
+*   Configuração de PAT via preferências do addon.
+
+### 2.2. Fase 1: Beta e Melhorias de Usabilidade (UI/UX)
+
+**Objetivo:** Refinar a experiência do usuário, coletar feedback e estabilizar o addon para um público mais amplo.
+
+**Foco:**
+*   **Feedback do Usuário:** Implementar canais para coleta de feedback e relatórios de bugs.
+*   **UI/UX Aprimorada:** Melhorar a interface do usuário no Blender, tornando-a mais intuitiva e visualmente agradável.
+*   **Gerenciamento de Modelos:** Adicionar funcionalidades básicas para listar modelos já exportados/uploadados e seus respectivos links/QR Codes.
+*   **Opções de Exportação:** Permitir que o usuário configure mais opções de exportação USDZ (ex: escala, compressão, materiais).
+*   **Tratamento de Erros:** Mensagens de erro mais claras e sugestões de solução de problemas diretamente na UI do Blender.
+
+### 2.3. Fase 2: Escala e Infraestrutura Avançada
+
+**Objetivo:** Construir uma infraestrutura mais robusta e escalável para o serviço, além de integrar funcionalidades avançadas de AR.
+
+**2.3.1. Backend Dedicado e Hospedagem Gerenciada**
+
+Para superar as limitações do GitHub Pages (como a falta de um link direto para o arquivo `.usdz` que não seja a página de visualização do navegador, e a latência de atualização), a criação de um backend dedicado é crucial. Este backend atuaria como um intermediário, gerenciando o upload e a distribuição dos modelos AR.
+
+*   **Tecnologias Sugeridas:**
+    *   **Servidor:** Python com FastAPI ou Node.js com Express.js, devido à sua leveza e eficiência para APIs.
+    *   **Hospedagem de Arquivos:** Amazon S3, Google Cloud Storage ou Vercel Blob. Estes serviços oferecem alta disponibilidade, escalabilidade e links diretos para os arquivos, essenciais para o funcionamento imediato do AR Quick Look/Scene Viewer.
+    *   **Banco de Dados (Opcional, para futuras funcionalidades):** PostgreSQL ou MongoDB para armazenar metadados dos modelos, informações de usuários, etc.
+
+*   **Funcionalidades do Backend:**
+    *   **API de Upload:** Um endpoint seguro para o addon do Blender enviar os arquivos `.usdz`.
+    *   **Geração de Links Diretos:** O backend geraria URLs curtas e diretas para os modelos hospedados, garantindo compatibilidade com os visualizadores AR.
+    *   **Autenticação (Futuro):** Gerenciamento de usuários e permissões para uploads e acesso a modelos.
+    *   **Otimização:** Possibilidade de aplicar otimizações adicionais nos modelos `.usdz` no lado do servidor (ex: compressão, validação).
+
+**2.3.2. Image Tracking Avançado**
+
+Atualmente, o addon foca na visualização AR em um plano. A próxima evolução é permitir que o modelo 3D seja ancorado a uma imagem específica (Image Target), abrindo um leque de possibilidades para experiências mais interativas e contextuais.
+
+*   **Tecnologias Sugeridas:**
+    *   **MindAR.js:** Uma biblioteca WebAR de código aberto que oferece Image Tracking robusto e é compatível com A-Frame, facilitando a integração com o ecossistema web.
+    *   **AR.js:** Outra biblioteca popular para WebAR, com suporte a Image Tracking e compatibilidade com A-Frame.
+    *   **A-Frame:** Um framework web para construir experiências de realidade virtual e aumentada com HTML, que simplifica a criação de cenas AR complexas.
+
+*   **Integração no Addon:**
+    *   **Seleção de Imagem Target:** No Blender, o usuário poderia selecionar uma imagem (ou fazer upload) que seria usada como o target para o AR.
+    *   **Geração de Cena AR:** O addon não apenas faria o upload do `.usdz`, mas também geraria um arquivo HTML/JavaScript básico (usando A-Frame e MindAR.js/AR.js) que incluiria o modelo 3D e a imagem target. Este arquivo HTML seria então hospedado e o QR Code apontaria para ele.
+    *   **Pré-visualização:** Possibilidade de pré-visualizar a cena AR com o Image Target dentro do Blender (desafio técnico complexo, mas ideal).
+
+**2.3.3. Melhorias de UI/UX no Blender**
+
+Além das funcionalidades, a experiência dentro do Blender pode ser significativamente aprimorada.
+
+*   **Painel Interativo:** Um painel mais dinâmico que mostre o status do upload, o progresso da geração do QR Code e talvez uma lista dos últimos modelos exportados.
+*   **Visualização 3D do QR Code:** (Ideia ambiciosa) Exibir o QR Code como uma textura em um plano 3D dentro da viewport do Blender, tornando a interação mais imersiva.
+*   **Configurações Salvas:** Garantir que as configurações do usuário (PAT, repositório) sejam salvas de forma persistente e segura.
+
+### 2.4. Fase 3: Ecossistema e Monetização
+
+**Objetivo:** Expandir o alcance do addon, criar um ecossistema de ferramentas e explorar modelos de negócio sustentáveis.
+
+**Foco:**
+*   **Multiplataforma AR:** Suporte a outros formatos e plataformas de AR (ex: WebXR, Reality Composer).
+*   **Templates e Cenários:** Oferecer templates pré-configurados de cenas AR (ex: visualização de produtos, galerias virtuais).
+*   **Comunidade e Suporte:** Construir uma comunidade de usuários, oferecer suporte e documentação abrangente.
+*   **Modelos de Monetização:**
+    *   **Freemium:** Versão básica gratuita com funcionalidades avançadas pagas (ex: mais espaço de armazenamento, uploads ilimitados, recursos premium de AR).
+    *   **Assinatura:** Planos mensais/anuais para acesso a todos os recursos e suporte prioritário.
+    *   **Licenciamento:** Licenças para uso comercial ou para empresas.
+*   **Integração com E-commerce:** Ferramentas para integrar diretamente com plataformas de e-commerce para visualização de produtos em AR.
+
+### 2.4. Fase 3: Ecossistema e Monetização
+
+**Objetivo:** Expandir o alcance do addon, criar um ecossistema de ferramentas e explorar modelos de negócio sustentáveis.
+
+**2.4.1. Estratégias de Monetização**
+
+Para garantir a sustentabilidade e o crescimento do projeto, diversas estratégias de monetização podem ser exploradas, adaptando-se às necessidades e ao valor percebido pelos usuários:
+
+*   **Modelo Freemium:** Oferecer uma versão básica do addon gratuitamente, com funcionalidades essenciais (como a exportação USDZ e o upload para GitHub Pages) para atrair uma ampla base de usuários. Recursos avançados, como maior capacidade de armazenamento, uploads ilimitados, Image Tracking avançado, suporte prioritário e acesso a templates premium, seriam disponibilizados em planos pagos.
+*   **Assinatura (SaaS):** Implementar planos de assinatura mensais ou anuais que desbloqueiam todas as funcionalidades premium, incluindo o acesso ao backend dedicado para hospedagem e API de Image Tracking, além de suporte técnico contínuo. Este modelo oferece receita recorrente e previsível.
+*   **Licenciamento para Empresas:** Para grandes estúdios ou empresas que necessitam de integrações personalizadas, maior controle sobre os dados ou funcionalidades específicas, um modelo de licenciamento empresarial pode ser oferecido. Isso incluiria suporte dedicado, SLAs (Service Level Agreements) e desenvolvimento de recursos sob demanda.
+*   **Venda de Ativos e Templates:** Criar um marketplace dentro do ecossistema do addon para a venda de modelos 3D otimizados para AR, texturas, materiais e templates de cenas AR pré-configuradas. Isso pode gerar receita adicional e enriquecer a experiência do usuário.
+
+**2.4.2. Considerações de Mercado e Posicionamento**
+
+O mercado de Realidade Aumentada está em constante crescimento, com aplicações em diversas indústrias. O posicionamento estratégico do addon é fundamental para o sucesso:
+
+*   **Público-Alvo:** Focar inicialmente em artistas 3D, designers, desenvolvedores de jogos independentes e pequenas agências de marketing que utilizam o Blender e buscam uma solução simplificada para AR. Posteriormente, expandir para empresas de e-commerce e educação.
+*   **Diferenciação:** O principal diferencial do addon será a **simplicidade e a integração nativa com o Blender**, automatizando um fluxo de trabalho que hoje é fragmentado e complexo. A capacidade de ir do modelo 3D ao QR Code de AR em poucos cliques é um grande atrativo.
+*   **Parcerias:** Explorar parcerias com plataformas de e-commerce, criadores de conteúdo 3D e comunidades de Blender para expandir o alcance e a adoção do addon.
+*   **Educação e Conteúdo:** Criar tutoriais, documentação e exemplos de uso para educar os usuários sobre o potencial da AR e como o addon pode facilitar seu trabalho. Isso ajuda a construir uma comunidade engajada.
+
+Ao seguir este roadmap, o addon "AR USDZ Exporter" tem o potencial de se tornar uma ferramenta indispensável para a criação de experiências de Realidade Aumentada, combinando a flexibilidade do Blender com a acessibilidade da WebAR.
