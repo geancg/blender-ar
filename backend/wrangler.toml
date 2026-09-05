@@ -11,7 +11,7 @@ bucket_name = "ar-exporter-files"
 [[d1_databases]]
 binding     = "DB"
 database_name = "ar-exporter-db"
-database_id   = "COLE_O_ID_AQUI"   # preenchido após: wrangler d1 create ar-exporter-db
+database_id   = "940fe982-14ff-4ae1-866f-17473ccdeb9e"
 
 # Limpeza diária de arquivos expirados (2h da manhã UTC)
 [triggers]

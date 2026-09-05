@@ -23,7 +23,7 @@ bl_info = {
 # ---------------------------------------------------------------------------
 # Config — troque pela URL do seu Worker após o deploy
 # ---------------------------------------------------------------------------
-BACKEND_URL = "https://ar-exporter.geancg.workers.dev"
+BACKEND_URL = "https://ar-exporter.ar-exporter.workers.dev"
 PRO_PURCHASE_URL = "https://gumroad.com/l/ar-exporter-pro"
 SUPPORT_URL = "https://ko-fi.com/geancg"
 MAX_FREE_FILES = 3
